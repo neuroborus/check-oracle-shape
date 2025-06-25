@@ -1,5 +1,7 @@
 #!/bin/bash
 
+export PATH=$PATH:$HOME/bin:$HOME/.local/bin
+
 COMPARTMENT_ID="" # ← OCIP
 BOT_TOKEN="" # ← TG bot
 CHAT_ID="" # ← TG chat_id
@@ -7,8 +9,10 @@ REGION="eu-frankfurt-1"
 
 AD_LIST=("Wgmt:EU-FRANKFURT-1-AD-1" "Wgmt:EU-FRANKFURT-1-AD-2" "Wgmt:EU-FRANKFURT-1-AD-3")
 
+echo "[$(date '+%Y-%m-%d %H:%M:%S')] Starting A1.Flex availability check..."
+
 for AD in "${AD_LIST[@]}"; do
-  available=$(oci limits resource-availability get \
+  available=$(/home/neuroborus/bin/oci limits resource-availability get \
     --service-name compute \
     --limit-name standard-a1-core-count \
     --availability-domain "$AD" \
